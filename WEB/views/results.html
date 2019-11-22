@@ -1,0 +1,180 @@
+<script src="../lib/knockout/knockout-3.5.1.js"></script>
+<script src="../lib/jQuery/jquery-3.4.1.min.js"></script>
+<script src="../lib/jQuery/jquery-ui.js"></script>
+<script src="../lib/bootstrap/js/bootstrap.min.js"></script>
+
+<script src="../data/staticInfo.js"></script>
+<script src="../data/bookmarks.js"></script>
+<script src="../data/lines.js"></script>
+
+<link rel="stylesheet" href="../lib/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet/less" type="text/css" href="../styles/results.less">
+<link rel="stylesheet/less" type="text/css" href="../styles/maximizedScreen.less">
+
+<div>
+    <table class="table">
+        <thead class="thead-light">
+            <tr data-bind="foreach: rowData().headers">
+                <th scope="col"><span data-bind="text:$data"></span></th>
+            </tr>
+        </thead>
+        <tbody data-bind="foreach: rowData().rows">
+            <tr>
+                <th scope="row"><span data-bind="text:id"></span></th>
+                <td><span data-bind="text:what"></td>
+                <td><span data-bind="text:by"></td>
+                <td><a href="" data-bind="click: $parent.playAudio">Play</a></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<br />
+
+<nav id="mediaPlayer" class="navbar fixed-bottom navbar-dark bg-dark" style="display:none">
+    <!-- <div class="container-fluid">
+        <ul class="navbar-nav">
+                <li class="nav-item">
+                    <span class="nav-link" data-bind="text:mediaPlayervm().title"></span>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="" data-bind="click:close">X</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="" data-bind="click:maxim">Maxim</a>
+                </li>
+            </ul>
+
+            <audio id="audioplayer" controls="controls" autoplay="autoplay" data-bind="attr:{src: mediaPlayervm().info}"></audio>
+
+
+    </div> -->
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <td>
+                    <button id="audioControl" onclick="togglePlaying()">Pause</button>
+                    <button id="audioControl_ff" onclick="fastforward(10)">+10</button>
+                    <button id="audioControl_bb" onclick="fastforward(-10)">-10</button>
+                </td>
+                <td>
+                    <canvas id="progress" width="500" height="5"></canvas>
+                    <audio id="audio" ontimeupdate="updateBar()" autoplay="autoplay" data-bind="attr:{src: mediaPlayervm().info}"></audio>
+                </td>
+                <td style="color: white;">
+                    <span id="current-time"></span> /
+                    <span id="duration"></span>
+                </td>
+                <td>
+                    <button id="audioControl_close" data-bind="click:close" >Close</button>
+                    <button id="audioControl_maxim" data-bind="click:maxim" >Maxim</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- <canvas id="progress" width="1000" height="10"></canvas>
+    <audio id="audio" ontimeupdate="updateBar()" autoplay="autoplay" data-bind="attr:{src: mediaPlayervm().info}">
+    </audio>
+    <br>
+    <span id="current-time"></span> /
+    <span id="duration"></span>
+    <br>
+    <button id="audioControl" onclick="togglePlaying()">Play</button> -->
+
+    <script src="../scripts/audioPlayer.js"></script>
+</nav>
+
+<nav id="mediaPlayerM" class="navbar fixed-bottom navbar-dark bg-dark" style="display:none;height: 50%;">
+    <div class="container-fluid">
+    <div class="baseDiv">
+        <div class="left">
+            <!-- ko foreach : $root.lines -->
+            <p class="lines" data-bind="attr: { id: 'Sentence' + Id }, text: Speaker + ' : ' + Text, click: $root.onParaDrag"></p>
+            <!-- /ko -->
+        </div>
+        <div class="right">
+            <div class="tabs">
+                <button id="TabButton0" class="activeTab" data-bind="click : openBookMarks">Bookmarks</button>
+                <button id="TabButton1" class="inactiveTab" data-bind="click : openParticipants">Call Participants</button>
+                <button id="TabButton2" class="inactiveTab" data-bind="click : openDetails">Call Details</button>
+                
+                <div id="Tab0" class="tabcontent">
+                    <table class="bookmarks">
+                        <tbody>
+                            <!-- ko foreach : bookmarks -->
+                            <tr>
+                                <td class="bookmarkTime">
+                                    <span data-bind="text: $root.GetTime($data)"></span>
+                                </td>
+                                <td class="bookmark">
+                                    <span data-bind="text: $data.Text"></span>
+                                </td>
+                                <td class="bookmarkContext">
+                                    <img src="../images/ellipsis.png" alt="" data-bind="click: $root.showContext"/>
+                                </td>
+                                <td>
+                                    <nav class="menu" data-bind="attr : { id: 'Context'+ Id }">
+                                        <ul>
+                                            <li class="menu-option" data-bind="click: $root.removeBookmark">
+                                                Remove
+                                            </li>
+                                        </ul>
+                                    </nav>
+                                </td>
+                            </tr>
+                            <!-- /ko -->
+                        </tbody>
+                        
+                    </table>
+                </div>
+                    
+                <div id="Tab1" class="tabcontent">
+                    <ul>
+                        <!-- ko foreach : callParticipants -->
+                            <li data-bind="text: $data"></li>
+                        <!-- /ko -->
+                    </ul>
+                </div>
+                
+                <div id="Tab2" class="tabcontent">
+                    <table class="callDetails">
+                        <tr>
+                            <td>Date and Time:</td>
+                            <td data-bind="text: callDetails().Time"></td>
+                        </tr>
+                        <tr>
+                            <td>Type:</td>
+                            <td data-bind="text: callDetails().Type"></td>
+                        </tr>
+                        <tr>
+                            <td>Investor Presentation:</td>
+                            <td data-bind="text: callDetails().PresentationAvailable"></td>
+                        </tr>
+                    </table>
+                </div>
+
+            </div>
+            <div class="lineup">
+                <div class="currentSpeaker">
+                    <p>Current Speaker</p>
+                    <p data-bind="text: $root.currentSpeaker"></p>
+                </div>
+                <!-- ko if : ($root.nextSpeaker && $root.nextSpeaker !== null) -->
+                    <div class="nextSpeaker">
+                        <p>Next Speaker</p>
+                        <p data-bind="text: $root.nextSpeaker"></p>
+                    </div>
+                <!-- /ko -->
+            </div>
+        </div>
+    </div>
+    </div>
+
+</nav>
+
+
+
+
+<script src="../scripts/results.js"></script>

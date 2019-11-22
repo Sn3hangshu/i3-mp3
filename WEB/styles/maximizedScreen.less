@@ -1,0 +1,138 @@
+.baseDiv
+{
+    position:absolute;
+    bottom:0;
+    padding: 1%;
+    height: 40%;
+    border-style: solid;
+    width: 95%;
+}
+
+.left
+{
+    width: 50%;
+    float: left;
+    overflow-y: scroll;
+    height: 100%;
+}
+
+.lines {
+    cursor: pointer;
+}
+
+.right
+{
+    width: 50%;
+    float: right;
+}
+
+.tabs
+{
+    width: 50%;
+    overflow-y: scroll;
+    height: 60%;
+    position:absolute;
+    top:0;
+}
+
+.lineup
+{
+    width: 50%;
+    overflow-y: scroll;
+    height: 40%;
+    position:absolute;
+    bottom:0;
+}
+
+.currentSpeaker
+{
+    width: 25%;
+    float: left;
+}
+
+.nextSpeaker
+{
+    width: 25%;
+    float: left;
+}
+
+.activeTab {
+    background-color: black;
+    color: white;
+    float: left;
+    border: solid;
+    border-color: white;
+    outline: none;
+    cursor: pointer;
+    width: 33%;
+}
+
+.inactiveTab {
+    background-color: white;
+    color: black;
+    float: left;
+    border: solid;
+    border-color: white;
+    outline: none;
+    cursor: pointer;
+    width: 33%;
+}
+
+.callDetails td {
+    width: 50%;
+    float: none;
+}
+
+.callDetails table {
+    table-layout: fixed;
+}
+
+.bookmarks {
+    width: 70%;
+}
+
+.bookmarkTime {
+    width: 8%;
+}
+
+.bookmarkContext {
+    width: 5%;
+}
+
+.bookmarkContext img {
+    border: black;
+    height: 3%;
+    cursor: pointer;
+}
+
+.bookmark {
+    position: relative;
+    width: 50%;
+}
+
+.bookmark:before {
+    content: '&nbsp;';
+    visibility: hidden;
+}
+
+.bookmark span {
+    position: absolute;
+    left: 0;
+    right: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.inactive {
+    color: lightgray;
+}
+
+.menu {
+    display: none;
+}
+
+figure:active .menu,
+figure:focus .menu {
+    visibility: visible;
+}

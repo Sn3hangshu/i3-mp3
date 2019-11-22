@@ -1,0 +1,31 @@
+Live Demo
+<!DOCTYPE html>
+   <head>
+      <title>KnockoutJS Simple Example</title>
+      <script src = "https://ajax.aspnetcdn.com/ajax/knockout/knockout-3.1.0.js" 
+         type = "text/javascript"></script>
+
+   </head>
+
+   <body>
+      <!-- This is called "view" of HTML markup that defines the appearance of UI -->
+
+      <p>First String: <input data-bind = "value: firstString" /></p>
+      <p>Second String: <input data-bind = "value: secondString" /></p>
+
+      <p>First String: <strong data-bind = "text: firstString">Hi</strong></p>
+      <p>Second String: <strong data-bind = "text: secondString">There</strong></p>
+
+      <p>Derived String: <strong data-bind = "text: thirdString"></strong></p>
+
+      <pre data-bind="text: ko.toJSON($data, null, 2)"></pre>
+
+      <script src = "./test.js" 
+      type = "text/javascript"></script>
+
+
+
+   </body>
+
+
+</html>
