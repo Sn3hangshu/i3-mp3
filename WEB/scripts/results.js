@@ -140,9 +140,11 @@ function stream(){
         if(transcriptStart - lineStart >= 0 && transcriptStart - lineEnd > 0){
             if(self.currentActive() === self.lines.length - 1){
             }else{
+                $("#Sentence"+ (self.currentActive() + 1)).removeClass('active')
                 $("#Sentence"+ (self.currentActive() + 1)).addClass('inactive')
                 self.currentActive(self.currentActive() + 1);
                 $("#Sentence"+ (self.currentActive() + 1)).removeClass('inactive')
+                $("#Sentence"+ (self.currentActive() + 1)).addClass('active')
                 $(".left").animate({scrollTop: $(".left").scrollTop() + ($("#Sentence"+self.currentActive()).offset().top - $(".left").offset().top)});
             }
         } 
@@ -163,6 +165,9 @@ $(document).ready(function() {
 function disableLine(index){
     if(index > 1){
         $("#Sentence"+index).addClass('inactive')
+    }
+    else {
+        $("#Sentence"+index).addClass('active')
     }
 };
 

@@ -1,0 +1,200 @@
+.baseDiv
+{
+    padding: 1%;
+    width: 95%;
+}
+
+.left
+{
+    width: 50%;
+    float: left;
+    overflow-y: scroll;
+    height: 100%;
+}
+
+.lines {
+    cursor: pointer;
+}
+
+.right
+{
+    width: 50%;
+    float: right;
+}
+
+.tabs
+{
+    width: 50%;
+    overflow-y: scroll;
+    height: 60%;
+    position:absolute;
+    top:0;
+    border: solid;
+    border-color: white;
+}
+
+.transcripts {
+    position: absolute;
+    top:0;
+    width: 90%;
+}
+
+.transcripts button {
+    width: 50%;
+    background-color: black;
+    color: white;
+}
+
+.lineup
+{
+    width: 50%;
+    overflow-y: scroll;
+    height: 40%;
+    position:absolute;
+    bottom:0;
+}
+
+.currentSpeaker
+{
+    width: 50%;
+    float: left;
+    color: white;
+    height: -webkit-fill-available;
+    border-right: solid;
+    border-color: white;
+}
+
+.currentSpeaker button {
+    width: 100%;
+    background-color: black;
+    color: white;
+}
+
+.nextSpeaker
+{
+    width: 50%;
+    float: left;
+    color: white;
+    height: -webkit-fill-available;
+}
+
+.nextSpeaker button {
+    width: 100%;
+    background-color: grey;
+    background-color: black;
+    color: white;
+}
+
+.activeTab {
+    background-color: red;
+    color: white;
+    float: left;
+    border: solid;
+    border-color: white;
+    outline: none;
+    cursor: pointer;
+    width: 33%;
+}
+
+.inactiveTab {
+    background-color: black;
+    color: white;
+    float: left;
+    border: solid;
+    border-color: white;
+    outline: none;
+    cursor: pointer;
+    width: 33.333%;
+}
+
+.callParticipants {
+    display: inline;
+    padding-inline-start: 0%;
+}
+
+.callParticipants li {
+    list-style-type: none;
+    border-top: solid;
+    border-color: white;
+    color: white;
+}
+
+.callDetails td {
+    width: 50%;
+    float: none;
+    color: white;
+}
+
+.callDetails table {
+    table-layout: fixed;
+}
+
+.bookmarks {
+    width: 100%;
+    color: white;
+}
+
+.bookmarkTime {
+    width: 10%;
+}
+
+.bookmarkContext {
+    width: 1%;
+    padding: unset;
+}
+
+.bookmarkContext img {
+    border: black;
+    height: 3%;
+    cursor: pointer;
+}
+
+.bookmark {
+    position: relative;
+    width: 70%;
+}
+
+.bookmarkMenu {
+    width: 15%;
+}
+
+.bookmark:before {
+    content: '&nbsp;';
+    visibility: hidden;
+}
+
+.bookmark span {
+    position: absolute;
+    left: 0;
+    right: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.inactive {
+    color: darkslategray;
+}
+
+.active {
+    color: white;
+}
+
+.menu {
+    display: none;
+}
+
+.menu ul {
+    padding-inline-start: 0%;
+}
+
+.menu li {
+    list-style-type: none;
+    background-color: white;
+    color: black;
+}
+
+figure:active .menu,
+figure:focus .menu {
+    visibility: visible;
+}

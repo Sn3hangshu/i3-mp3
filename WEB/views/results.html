@@ -9,7 +9,7 @@
 
 <link rel="stylesheet" href="../lib/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet/less" type="text/css" href="../styles/results.less">
-<link rel="stylesheet/less" type="text/css" href="../styles/maximizedScreen.less">
+<link rel="stylesheet" type="text/css" href="../styles/maximizedScreen.css">
 
 <div>
     <table class="table">
@@ -87,8 +87,11 @@
 </nav>
 
 <nav id="mediaPlayerM" class="navbar fixed-bottom navbar-dark bg-dark" style="display:none;height: 50%;">
-    <div class="container-fluid">
+    <div>
     <div class="baseDiv">
+        <div class="transcripts">
+            <!-- <button>Transcripts</button> -->
+        </div>
         <div class="left">
             <!-- ko foreach : $root.lines -->
             <p class="lines" data-bind="attr: { id: 'Sentence' + Id }, text: Speaker + ' : ' + Text, click: $root.onParaDrag"></p>
@@ -112,9 +115,9 @@
                                     <span data-bind="text: $data.Text"></span>
                                 </td>
                                 <td class="bookmarkContext">
-                                    <img src="../images/ellipsis.png" alt="" data-bind="click: $root.showContext"/>
+                                        <img src="../images/ellipsis.png" alt="" data-bind="click: $root.showContext"/>
                                 </td>
-                                <td>
+                                <td class="bookmarkMenu">
                                     <nav class="menu" data-bind="attr : { id: 'Context'+ Id }">
                                         <ul>
                                             <li class="menu-option" data-bind="click: $root.removeBookmark">
@@ -131,7 +134,7 @@
                 </div>
                     
                 <div id="Tab1" class="tabcontent">
-                    <ul>
+                    <ul class="callParticipants">
                         <!-- ko foreach : callParticipants -->
                             <li data-bind="text: $data"></li>
                         <!-- /ko -->
@@ -158,12 +161,12 @@
             </div>
             <div class="lineup">
                 <div class="currentSpeaker">
-                    <p>Current Speaker</p>
+                    <button>Current Speaker</button>
                     <p data-bind="text: $root.currentSpeaker"></p>
                 </div>
                 <!-- ko if : ($root.nextSpeaker && $root.nextSpeaker !== null) -->
                     <div class="nextSpeaker">
-                        <p>Next Speaker</p>
+                        <button>Next Speaker</button>
                         <p data-bind="text: $root.nextSpeaker"></p>
                     </div>
                 <!-- /ko -->
