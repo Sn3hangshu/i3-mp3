@@ -5,12 +5,14 @@
 
 <script src="../data/staticInfo.js"></script>
 <script src="../data/bookmarks.js"></script>
+<script src="../data/getTranscriptData.js"></script>
 <script src="../data/lines.js"></script>
 
 <link rel="stylesheet" href="../lib/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="../lib/bootstrap/css/bootstrap.css">
 <link rel="stylesheet/less" type="text/css" href="../styles/results.less">
 <link rel="stylesheet" type="text/css" href="../styles/maximizedScreen.css">
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <div>
     <table class="table">
         <thead class="thead-light">
@@ -20,10 +22,16 @@
         </thead>
         <tbody data-bind="foreach: rowData().rows">
             <tr>
-                <th scope="row"><span data-bind="text:id"></span></th>
-                <td><span data-bind="text:what"></td>
-                <td><span data-bind="text:by"></td>
-                <td><a href="" data-bind="click: $parent.playAudio">Play</a></td>
+                <th scope="row"><i class="fa fa-ellipsis-v"></i></th>
+                <td><span data-bind="text:date"></td>
+                <td><span data-bind="text:title"></td>
+                <td><span data-bind="text:type"></td>
+                <td><i class="fa fa-file-pdf-o" aria-hidden="true" style="font-size: 30px; text-align: left;"></i>     
+                    
+                    <i class="fa fa-file-word-o" aria-hidden="true" style="font-size: 30px; text-align: right;"></i></td>
+                <td style="width:10%"><i class="fa fa-download" aria-hidden="true"  style="font-size: 30px;"></i>
+                    <a href="" data-bind="click: $parent.playAudio"><i class="fa fa-play" aria-hidden="true" style="font-size: 30px;color: green;"></i></a></td>
+                <td><i class="fa fa-file-pdf-o" aria-hidden="true" style="font-size: 30px; text-align: left;"></i></td>
             </tr>
         </tbody>
     </table>
@@ -32,56 +40,40 @@
 <br />
 
 <nav id="mediaPlayer" class="navbar fixed-bottom navbar-dark bg-dark" style="display:none">
-    <!-- <div class="container-fluid">
-        <ul class="navbar-nav">
-                <li class="nav-item">
-                    <span class="nav-link" data-bind="text:mediaPlayervm().title"></span>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="" data-bind="click:close">X</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="" data-bind="click:maxim">Maxim</a>
-                </li>
-            </ul>
-
-            <audio id="audioplayer" controls="controls" autoplay="autoplay" data-bind="attr:{src: mediaPlayervm().info}"></audio>
-
-
-    </div> -->
-
+    <div style="text-align: center;">
+            <i id="audioControl_maxim" data-bind="click:maxim" class="fa fa-chevron-up" style="color: white;"></i>
+    </div>
     <table class="table">
         <tbody>
             <tr>
+                    <td>
+                            <a data-bind="click: fastforward(-10)"><i class="fa fa-fast-backward" style="color: white;"></i></a>
+                        </td>
                 <td>
-                    <button id="audioControl" onclick="togglePlaying()">Pause</button>
-                    <button id="audioControl_ff" onclick="fastforward(10)">+10</button>
-                    <button id="audioControl_bb" onclick="fastforward(-10)">-10</button>
+                    <a onclick="togglePlaying()"><i id="audioControl" class="fa fa-pause-circle" aria-hidden="true" style="font-size: 30px;color:white;"></i></a>
                 </td>
                 <td>
-                    <canvas id="progress" width="500" height="5"></canvas>
-                    <audio id="audio" ontimeupdate="updateBar()" autoplay="autoplay" data-bind="attr:{src: mediaPlayervm().info}"></audio>
+                        <a data-bind="click: fastforward(10)"><i class="fa fa-fast-forward" style="color: white;"></i></a>
+                    </td>
+
+
+                <td>
+                        <span id="current-time" style="color: white;"></span>
                 </td>
-                <td style="color: white;">
-                    <span id="current-time"></span> /
-                    <span id="duration"></span>
+                    <td>
+                        <canvas id="progress" width="500" height="5"></canvas>
+                        <audio id="audio" ontimeupdate="updateBar()" autoplay="autoplay" data-bind="attr:{src: mediaPlayervm().info}"></audio>
+                    </td>
+
+                <td>
+                    <span id="duration"  style="color: white;"></span>
                 </td>
                 <td>
-                    <button id="audioControl_close" data-bind="click:close" >Close</button>
-                    <button id="audioControl_maxim" data-bind="click:maxim" >Maxim</button>
+                    <i  id="audioControl_close" data-bind="click:close" class="fa fa-times" aria-hidden="true" style="color: white;"></i>
                 </td>
             </tr>
         </tbody>
     </table>
-
-    <!-- <canvas id="progress" width="1000" height="10"></canvas>
-    <audio id="audio" ontimeupdate="updateBar()" autoplay="autoplay" data-bind="attr:{src: mediaPlayervm().info}">
-    </audio>
-    <br>
-    <span id="current-time"></span> /
-    <span id="duration"></span>
-    <br>
-    <button id="audioControl" onclick="togglePlaying()">Play</button> -->
 
     <script src="../scripts/audioPlayer.js"></script>
 </nav>
@@ -92,11 +84,13 @@
         <div class="transcripts">
             <!-- <button>Transcripts</button> -->
         </div>
-        <div class="left">
-            <!-- ko foreach : $root.lines -->
-            <p class="lines" data-bind="attr: { id: 'Sentence' + Id }, text: Speaker + ' : ' + Text, click: $root.onParaDrag"></p>
-            <!-- /ko -->
-        </div>
+        <div class="left transcriptdiv" style="color: white;">
+                <!-- ko foreach : $root.listOfWords -->
+                <span data-bind="attr: { id:id},text: word,event: { click: $root.onclick} ">
+
+                </span>
+                <!-- /ko -->
+            </div>
         <div class="right">
             <div class="tabs">
                 <button id="TabButton0" class="activeTab" data-bind="click : openBookMarks">Bookmarks</button>
@@ -104,34 +98,16 @@
                 <button id="TabButton2" class="inactiveTab" data-bind="click : openDetails">Call Details</button>
                 
                 <div id="Tab0" class="tabcontent">
-                    <table class="bookmarks">
-                        <tbody>
-                            <!-- ko foreach : bookmarks -->
-                            <tr>
-                                <td class="bookmarkTime">
-                                    <span data-bind="text: $root.GetTime($data)"></span>
-                                </td>
-                                <td class="bookmark">
-                                    <span data-bind="text: $data.Text"></span>
-                                </td>
-                                <td class="bookmarkContext">
-                                        <img src="../images/ellipsis.png" alt="" data-bind="click: $root.showContext"/>
-                                </td>
-                                <td class="bookmarkMenu">
-                                    <nav class="menu" data-bind="attr : { id: 'Context'+ Id }">
-                                        <ul>
-                                            <li class="menu-option" data-bind="click: $root.removeBookmark">
-                                                Remove
-                                            </li>
-                                        </ul>
-                                    </nav>
-                                </td>
-                            </tr>
-                            <!-- /ko -->
-                        </tbody>
-                        
-                    </table>
-                </div>
+                        <ul data-bind="foreach: bookmarks">
+                            <li style="color: turquoise;" data-bind="event:{click:$root.onBookmarkClick}">
+                                <span data-bind="text: $root.GetTime($data.StartTime)"> </span>
+                                <span data-bind="text: $root.GetTime($data.EndTime)"> </span>
+                                <span data-bind="text: $data.Text"></span>
+                                <a  data-bind="click: $parent.removeBookmark"><i style="color: red;" class="fa fa-trash" aria-hidden="true"></i></a>
+                            </li>
+                        </ul>
+
+                    </div>
                     
                 <div id="Tab1" class="tabcontent">
                     <ul class="callParticipants">
@@ -176,7 +152,9 @@
     </div>
 
 </nav>
-
+<div style="z-index: 9999;" class="dropdown-menu dropdown-menu-sm" id="context-menu">
+        <a class="dropdown-item" href="#">BookMark</a>
+</div>
 
 
 

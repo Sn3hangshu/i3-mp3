@@ -33,14 +33,14 @@ function updateProgress(canvas, event) {
 
 function togglePlaying() {
 
-  var pause = ctrl.innerHTML === 'Pause'
+  var pause = ctrl.className === 'fa fa-pause-circle'
   var method
 
   if (pause) {
-    ctrl.innerHTML = 'Play'
+    ctrl.className = 'fa fa-play-circle'
     method = 'pause'
   } else {
-    ctrl.innerHTML = 'Pause'
+    ctrl.className = 'fa fa-pause-circle'
     method = 'play'
   }
 
@@ -51,6 +51,18 @@ function togglePlaying() {
 function fastforward(secs){
   audioEl.currentTime = audioEl.currentTime + secs;
   audioEl['play']()
+};
+
+function playBookmarks(startTime,endTime) {
+  audioEl.currentTime = startTime;
+  var duration = endTime - startTime;
+  audioEl.duration(duration);
+  audioEl['play']();
+};
+
+function playWord(secs) {
+  audioEl.currentTime = secs;
+  audioEl['play']();
 };
 
 function updateBar() {
